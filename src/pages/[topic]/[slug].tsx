@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
+import { useRouter } from 'next/router'
+import { formatDate, splitDate } from '../../utils/dateTransform'
 
 import { Filter, Container, TypeSpan } from '../../styles/global'
-import Sponsored from '../../components/sponsored'
 import { PostHeader, PostSection } from '../../styles/pages/article'
 
 import Navbar from '../../components/navbar'
 import Footer from '../../components/footer'
-import { useRouter } from 'next/router'
-import { formatDate, splitDate } from '../../utils/dateTransform'
+import Newsletter from '../../components/newsletter'
+import Sponsored from '../../components/sponsored'
 
 const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   post
@@ -61,6 +62,7 @@ const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <Sponsored />
           </Container>
         </main>
+        <Newsletter />
         <Footer />
       </Filter>
     </>

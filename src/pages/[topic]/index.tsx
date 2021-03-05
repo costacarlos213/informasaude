@@ -46,7 +46,7 @@ async function fetchPosts(topic, offset) {
     }
   `
 
-  const res = await fetch('http://localhost/api', {
+  const res = await fetch('https://informasaude.com/wordpress/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

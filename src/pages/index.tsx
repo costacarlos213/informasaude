@@ -22,9 +22,11 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       />
       <Filter isSideSectionVisible={sideSectionIsVisible}>
         <main>
-          <Container>
-            <MainImageSection posts={posts} />
-          </Container>
+          {posts.length === 3 && (
+            <Container>
+              <MainImageSection posts={posts} />
+            </Container>
+          )}
           <Container>
             <Sponsored />
           </Container>

@@ -13,9 +13,9 @@ export const Description = styled.aside`
   padding: 10px;
   padding-left: 15px;
   padding-right: 20px;
-  bottom: 6.8rem;
+  bottom: 5.8rem;
   max-width: 40rem;
-  height: 6.2rem;
+  height: 5.4rem;
   display: flex;
   justify-content: center;
   flex-direction: column;

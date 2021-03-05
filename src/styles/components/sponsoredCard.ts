@@ -5,6 +5,7 @@ export const SponsoredCard = styled.article`
   width: calc(100vw - 4rem);
   height: auto;
   margin-bottom: 1.6rem;
+  max-width: 38.2rem;
 
   img {
     width: 100%;

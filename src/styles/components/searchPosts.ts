@@ -6,8 +6,8 @@ export const SearchArticlesAside = styled.aside`
   border-radius: 12px;
   width: calc(100vw - 4rem);
   height: auto;
-  margin-top: 10rem;
-  margin-bottom: 10rem;
+  margin-top: 6rem;
+  margin-bottom: 6rem;
   margin-left: auto;
   margin-right: auto;
   padding: 3.6rem;

@@ -10,7 +10,7 @@ import {
 } from '../styles/components/navbar'
 import InstagramSvg from '../assets/icons/instagramWhite.svg'
 import FacebookSvg from '../assets/icons/facebookWhite.svg'
-import SearchDiv from './searchDiv'
+import SearchDiv from './searchBar'
 import Link from 'next/link'
 
 interface NavbarProps {
@@ -41,15 +41,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const wrapperRef = useRef<HTMLInputElement>(null)
   useOutsideClick(wrapperRef)
 
-  // useEffect(() => {
-  //   const htmlTag = document.getElementsByTagName('html')[0].style
-  //   if (htmlTag.overflowY === 'hidden') {
-  //     htmlTag.overflowY = 'auto'
-  //   } else {
-  //     htmlTag.overflowY = 'hidden'
-  //   }
-  // }, [visibility])
-
   return (
     <section>
       <SideSection show={visibility} ref={wrapperRef}>
@@ -62,47 +53,47 @@ const Navbar: React.FC<NavbarProps> = ({
         <nav>
           <ul>
             <li>
-              <Link href="/equilibre-se" passHref replace>
+              <Link href="/equilibre-se" passHref>
                 <a>Equilibre-se</a>
               </Link>
             </li>
             <li>
-              <Link href="/fitness" passHref replace>
+              <Link href="/fitness" passHref>
                 <a>Fitness</a>
               </Link>
             </li>
             <li>
-              <Link href="/familia-plena" passHref replace>
+              <Link href="/familia-plena" passHref>
                 <a>Família Plena</a>
               </Link>
             </li>
             <li>
-              <Link href="/profissional" passHref replace>
+              <Link href="/profissional" passHref>
                 <a>Profissional</a>
               </Link>
             </li>
             <li>
-              <Link href="/medicina" passHref replace>
+              <Link href="/medicina" passHref>
                 <a>Medicina</a>
               </Link>
             </li>
             <li>
-              <Link href="/alimentacao" passHref replace>
+              <Link href="/alimentacao" passHref>
                 <a>Alimentação</a>
               </Link>
             </li>
             <li>
-              <Link href="/vida-pet" passHref replace>
+              <Link href="/vida-pet" passHref>
                 <a>Vida Pet</a>
               </Link>
             </li>
             <li>
-              <Link href="/saude-financeira" passHref replace>
+              <Link href="/saude-financeira" passHref>
                 <a>Saúde Financeira</a>
               </Link>
             </li>
             <li>
-              <Link href="/saude-especial" passHref replace>
+              <Link href="/saude-especial" passHref>
                 <a>Saúde Especial</a>
               </Link>
             </li>

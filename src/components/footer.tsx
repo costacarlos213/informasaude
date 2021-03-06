@@ -16,27 +16,27 @@ const Footer: React.FC = () => {
           <div>
             <ul>
               <li>
-                <Link href="/" replace passHref>
+                <Link href="/" passHref>
                   <a>Inicio</a>
                 </Link>
               </li>
               <li>
-                <Link href="/fitness" replace passHref>
+                <Link href="/fitness" passHref>
                   <a>Fitness</a>
                 </Link>
               </li>
               <li>
-                <Link href="/equilibre-se" replace passHref>
+                <Link href="/equilibre-se" passHref>
                   <a>Equilibre-se</a>
                 </Link>
               </li>
               <li>
-                <Link href="/familia-plena" replace passHref>
+                <Link href="/familia-plena" passHref>
                   <a>Família Plena</a>
                 </Link>
               </li>
               <li>
-                <Link href="/profissional" replace passHref>
+                <Link href="/profissional" passHref>
                   <a>Profissional</a>
                 </Link>
               </li>
@@ -45,27 +45,27 @@ const Footer: React.FC = () => {
           <div>
             <ul>
               <li>
-                <Link href="/medicina" replace passHref>
+                <Link href="/medicina" passHref>
                   <a>Medicina</a>
                 </Link>
               </li>
               <li>
-                <Link href="/alimentacao" replace passHref>
+                <Link href="/alimentacao" passHref>
                   <a>Alimentação</a>
                 </Link>
               </li>
               <li>
-                <Link href="/vida-pet" replace passHref>
+                <Link href="/vida-pet" passHref>
                   <a>Vida Pet</a>
                 </Link>
               </li>
               <li>
-                <Link href="/saude-financeira" replace passHref>
+                <Link href="/saude-financeira" passHref>
                   <a>Saúde Financeira</a>
                 </Link>
               </li>
               <li>
-                <Link href="/saude-especial" replace passHref>
+                <Link href="/saude-especial" passHref>
                   <a>Saúde Especial</a>
                 </Link>
               </li>

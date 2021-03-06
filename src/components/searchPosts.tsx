@@ -2,7 +2,7 @@ import React from 'react'
 
 import informaSaudeImg from '../assets/informaSaude.png'
 
-import SearchDiv from '../components/searchDiv'
+import SearchDiv from './searchBar'
 import { SearchArticlesAside } from '../styles/components/searchPosts'
 
 interface SearchPostsProps {

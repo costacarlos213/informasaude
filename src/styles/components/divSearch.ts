@@ -2,8 +2,11 @@ import styled from 'styled-components'
 import { IChangeVisibility } from './navbar'
 
 export const DivSearch = styled.article<IChangeVisibility>`
-  display: flex;
   margin-left: auto;
+
+  form {
+    display: flex;
+  }
 
   button {
     width: 3.2rem;

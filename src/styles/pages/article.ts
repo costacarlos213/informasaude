@@ -36,6 +36,7 @@ export const PostHeader = styled.header`
 export const PostSection = styled.section`
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   margin-top: 3.2rem;
   margin-bottom: 3.6rem;
@@ -44,19 +45,44 @@ export const PostSection = styled.section`
     width: 92.8rem;
     height: 42.5rem;
     margin-bottom: 2.4rem;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
   }
 
-  img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  p {
-    max-width: 80rem;
-    text-align: justify;
-    margin-top: 1.6rem;
-    text-indent: 3.6rem;
+    p {
+      max-width: 80rem;
+      text-align: justify;
+      margin-top: 1.6rem;
+      text-indent: 3.6rem;
+    }
+
+    figure {
+      width: auto;
+      max-width: 60rem;
+      margin-top: 1.6rem;
+      margin-bottom: 1.6rem;
+
+      &.is-type-video {
+        width: 53.2rem;
+        height: 30rem;
+      }
+
+      * {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
 
   @media (max-width: 900px) {
@@ -66,8 +92,10 @@ export const PostSection = styled.section`
       margin-bottom: 2.4rem;
     }
 
-    p {
-      max-width: 80vw;
+    section {
+      p {
+        max-width: 80vw;
+      }
     }
   }
 `

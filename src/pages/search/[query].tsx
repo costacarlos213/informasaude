@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { GetStaticProps, InferGetStaticPropsType, GetStaticPaths } from 'next'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import Link from 'next/link'
 
 import {
   PostArticle,
@@ -14,16 +14,14 @@ import Navbar from '../../components/navbar'
 import Footer from '../../components/footer'
 import SearchPosts from '../../components/searchPosts'
 import Sponsored from '../../components/sponsored'
-import Link from 'next/link'
 
 import { formatDate } from '../../utils/dateTransform'
+import { getPostsByName } from '../../lib/api'
 import { calcPagination } from '../../utils/calcPagination'
-import { getPostsByTopic, prefetchCategories } from '../../lib/api'
 
-const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  data,
-  pageInfo
-}) => {
+const Search: React.FC<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ data, pageInfo, query }) => {
   const [sideSectionIsVisible, setSideSectionVisibility] = useState(false)
   const [pageIndex, setPageIndex] = useState(1)
   const [posts, setPosts] = useState(data)
@@ -32,12 +30,9 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     setPosts(data)
   }, [data])
 
-  const router = useRouter()
-  const { topic } = router.query
-
   const fetchPosts = async index => {
     const offset = (index - 1) * 6
-    const res = await getPostsByTopic(topic.toString(), offset)
+    const res = await getPostsByName(offset, query)
 
     setPosts(res.data.posts.nodes)
     setPageIndex(index)
@@ -90,9 +85,11 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <div>
               {posts.map(post => {
                 const date = formatDate(post.dateGmt)
-
                 return (
-                  <Link href={`${topic}/${post.slug}`} key={post.slug}>
+                  <Link
+                    href={`/${post.categories.nodes[0].slug}/${post.slug}`}
+                    key={post.slug}
+                  >
                     <PostArticle>
                       <img
                         src={post.featuredImage.node.sourceUrl}
@@ -102,7 +99,9 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                         <h1>{post.title}</h1>
                         <TypeSpan>{date}</TypeSpan>
                         <br />
-                        <TypeSpan>{post.categories.nodes[0].name}</TypeSpan>
+                        <Link href={`/${post.categories.nodes[0].slug}`}>
+                          <TypeSpan>{post.categories.nodes[0].name}</TypeSpan>
+                        </Link>
                       </div>
                     </PostArticle>
                   </Link>
@@ -124,22 +123,9 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await prefetchCategories()
-  const categories = res.data.categories.nodes
-
-  const paths = categories.map(post => ({
-    params: { topic: post.slug }
-  }))
-
-  return {
-    paths,
-    fallback: false
-  }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await getPostsByTopic(params.topic.toString(), 0)
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { query } = ctx.params
+  const res = await getPostsByName(0, query.toString())
 
   const data = res.data.posts.nodes
   const pageInfo = res.data.posts.pageInfo.offsetPagination
@@ -147,10 +133,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       data,
-      pageInfo
-    },
-    revalidate: 1
+      pageInfo,
+      query: query.toString()
+    }
   }
 }
 
-export default Topic
+export default Search

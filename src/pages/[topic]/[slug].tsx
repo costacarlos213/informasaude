@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
-import { formatDate, splitDate } from '../../utils/dateTransform'
+import { formatDate } from '../../utils/dateTransform'
 
 import { Filter, Container, TypeSpan } from '../../styles/global'
 import { PostHeader, PostSection } from '../../styles/pages/article'
@@ -10,6 +10,7 @@ import Navbar from '../../components/navbar'
 import Footer from '../../components/footer'
 import Newsletter from '../../components/newsletter'
 import Sponsored from '../../components/sponsored'
+import { getPostBySlug, prefetchPosts } from '../../lib/api'
 
 const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   post
@@ -34,8 +35,7 @@ const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     )
   }
 
-  const splitedDate = splitDate(post.dateGmt)
-  const date = formatDate(splitedDate)
+  const date = formatDate(post.dateGmt)
 
   return (
     <>
@@ -70,31 +70,9 @@ const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const CATEGORIES_POSTS_QUERY = `
-      query postsAndCategories {
-        posts {
-          nodes {
-            slug
-            categories {
-              nodes {
-                slug
-              }
-            }
-          }
-        }
-      }
-    `
+  const res = await prefetchPosts()
 
-  const res = await fetch(process.env.WORDPRESS_API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: CATEGORIES_POSTS_QUERY
-    })
-  })
-
-  const json = await res.json()
-  const posts = json.data.posts.nodes
+  const posts = res.data.posts.nodes
   const paths = posts.map(post => ({
     params: { slug: post.slug, topic: post.categories.nodes[0].slug }
   }))
@@ -106,36 +84,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const SINGLE_POST_QUERY = `
-    query accessPost {
-      post(id: "${params.slug}", idType: SLUG) {
-        categories {
-          nodes {
-            name
-          }
-        }
-        content
-        featuredImage {
-          node {
-            sourceUrl
-          }
-        }
-        title
-        dateGmt
-      }
-    }
-  `
-
-  const res = await fetch(process.env.WORDPRESS_API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: SINGLE_POST_QUERY
-    })
-  })
-
-  const { data } = await res.json()
-  const post = data.post
+  const res = await getPostBySlug(params.slug.toString())
+  const post = res.data.post
 
   return {
     props: {

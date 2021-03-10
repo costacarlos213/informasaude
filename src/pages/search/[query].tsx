@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Link from 'next/link'
 
-import { PaginationContext } from '../../lib/context'
+import { PaginationContext, previewPagination } from '../../lib/context'
 
 import { PostArticle, PostsContainer } from '../../styles/pages/topic'
 import { TypeSpan } from '../../styles/global'
@@ -17,16 +17,23 @@ const Search: React.FC<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ data, pageInfo, query, sponsoreds }) => {
   const [posts, setPosts] = useState(data)
-  const [paginationContext] = useContext(PaginationContext)
+  const [paginationContext, setPaginationContext] = useContext(
+    PaginationContext
+  )
 
   const fetchPosts = async index => {
-    const offset = (index - 1) * 6
-    const res = await getPostsByName(offset, query)
+    try {
+      const offset = (index - 1) * 6
+      const res = await getPostsByName(offset, query)
 
-    setPosts(res.data.posts.nodes)
+      setPosts(res.data.posts.nodes)
 
-    document.body.scrollTop = 0
-    document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    } catch (err) {
+      console.log(err)
+      setPaginationContext(previewPagination)
+    }
   }
 
   useEffect(() => {

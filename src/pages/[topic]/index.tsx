@@ -9,7 +9,7 @@ import {
   prefetchCategories,
   getSponsoredsByTopic
 } from '../../lib/api'
-import { PaginationContext } from '../../lib/context'
+import { PaginationContext, previewPagination } from '../../lib/context'
 import { useNonInitialEffect } from '../../lib/useNonInitialEffect'
 
 import { PostArticle, PostsContainer } from '../../styles/pages/topic'
@@ -25,19 +25,26 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   sponsoreds
 }) => {
   const [posts, setPosts] = useState(data)
-  const [paginationContext] = useContext(PaginationContext)
+  const [paginationContext, setPaginationContext] = useContext(
+    PaginationContext
+  )
 
   const router = useRouter()
   const { topic } = router.query
 
   const fetchPosts = async index => {
-    const offset = (index - 1) * 6
-    const res = await getPostsByTopic(topic.toString(), offset)
+    try {
+      const offset = (index - 1) * 6
+      const res = await getPostsByTopic(topic.toString(), offset)
 
-    setPosts(res.data.posts.nodes)
+      setPosts(res.data.posts.nodes)
 
-    document.body.scrollTop = 0
-    document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    } catch (err) {
+      console.log(err)
+      setPaginationContext(previewPagination)
+    }
   }
 
   useEffect(() => {
@@ -46,7 +53,6 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   useNonInitialEffect(() => {
     fetchPosts(paginationContext)
-    console.log('POSTS FETCHED')
   }, [paginationContext])
 
   return (

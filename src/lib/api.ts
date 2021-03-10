@@ -68,6 +68,22 @@ interface IPrefetchedCategories {
   }
 }
 
+interface ISponsoreds {
+  data: {
+    post: {
+      excerpt: string
+      slug: string
+      content: string
+      title: string
+      featuredImage: {
+        node: {
+          sourceUrl: string
+        }
+      }
+    }
+  }
+}
+
 async function fetchAPI(query) {
   const res = await fetch('https://api.informasaude.com/graphql', {
     method: 'POST',
@@ -220,7 +236,7 @@ export async function getPostBySlug(slug: string): Promise<ISinglePost> {
 
 export async function getSponsoreds(): Promise<IMultiplePosts> {
   const SPONSORED_QUERY = `
-    query Sponsored {
+    query Sponsoreds {
       posts(where: {categoryId: 12}) {
         nodes {
           title
@@ -237,6 +253,7 @@ export async function getSponsoreds(): Promise<IMultiplePosts> {
             }
           }
           content
+          excerpt
         }
       }
     }
@@ -268,12 +285,35 @@ export async function getSponsoredsByTopic(
             }
           }
           content
+          excerpt
         }
       }
     }
   `
 
   const data = await fetchAPI(CATEGORIZED_SPONSOREDS_QUERY)
+
+  return data
+}
+
+export async function getSponsoredBySlug(slug: string): Promise<ISponsoreds> {
+  const SPONSORED_QUERY = `
+    query Sponsored {
+      post(id: "${slug}", idType: SLUG) {
+        excerpt
+        slug
+        content
+        title
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+      }
+    }
+  `
+
+  const data = await fetchAPI(SPONSORED_QUERY)
 
   return data
 }
@@ -295,6 +335,22 @@ export async function prefetchPosts(): Promise<IPrefetchPosts> {
   `
 
   const data = await fetchAPI(CATEGORIES_POSTS_QUERY)
+
+  return data
+}
+
+export async function prefetchSponsoreds(): Promise<IPrefetchPosts> {
+  const SPONSOREDS_QUERY = `
+    query Sponsoreds {
+      posts(where: {categoryId: 12}) {
+        nodes {
+          slug
+        }
+      }
+    }  
+  `
+
+  const data = await fetchAPI(SPONSOREDS_QUERY)
 
   return data
 }

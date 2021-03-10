@@ -15,7 +15,7 @@ import { useNonInitialEffect } from '../../lib/useNonInitialEffect'
 import { PostArticle, PostsContainer } from '../../styles/pages/topic'
 import { TypeSpan } from '../../styles/global'
 
-import Sponsored from '../../components/sponsored'
+import Sponsored from '../../components/sponsoredSection'
 import Main from '../../components/main'
 import Pagination from '../../components/Pagination'
 

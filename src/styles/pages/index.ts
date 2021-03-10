@@ -17,20 +17,3 @@ export const HeaderSection = styled.header`
     text-align: left;
   }
 `
-
-export const SponsoredSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  @media (min-width: 700px) {
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  @media (min-width: 1280px) {
-    align-items: flex-start;
-  }
-`

@@ -10,7 +10,7 @@ import { TypeSpan } from '../../styles/global'
 import { formatDate } from '../../utils/dateTransform'
 import { getPostsByName, getSponsoreds } from '../../lib/api'
 import Main from '../../components/main'
-import Sponsored from '../../components/sponsored'
+import Sponsored from '../../components/sponsoredSection'
 import Pagination from '../../components/Pagination'
 
 const Search: React.FC<

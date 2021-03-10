@@ -1,5 +1,9 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { TypeSpan } from '../global'
+
+interface SectionProps {
+  unique: boolean
+}
 
 export const SponsoredCard = styled.article`
   width: calc(100vw - 4rem);
@@ -29,8 +33,11 @@ export const SponsoredCard = styled.article`
   }
 
   section {
-    h1:hover {
+    a {
       cursor: pointer;
+    }
+
+    a:hover h1 {
       text-decoration: underline;
     }
   }
@@ -82,5 +89,23 @@ export const SponsoredCard = styled.article`
         margin: 0;
       }
     }
+  }
+`
+
+export const SponsoredSection = styled.section<SectionProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media (min-width: 700px) {
+    flex-direction: row;
+    justify-content: ${props => (props.unique ? 'flex-start' : 'space-evenly')};
+    ${props =>
+      props.unique &&
+      css`
+        padding-left: 2.4rem;
+      `}
   }
 `

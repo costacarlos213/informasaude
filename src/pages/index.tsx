@@ -7,7 +7,7 @@ import { Container } from '../styles/global'
 
 import MainImageSection from '../components/mainImageSection'
 import SearchPosts from '../components/searchPosts'
-import Sponsored from '../components/sponsored'
+import Sponsored from '../components/sponsoredSection'
 import Main from '../components/main'
 
 const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({

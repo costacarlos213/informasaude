@@ -1,9 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { SponsoredCard } from '../styles/components/sponsoredCard'
+import {
+  SponsoredCard,
+  SponsoredSection
+} from '../styles/components/sponsoredCard'
 import { TypeSpan, Container } from '../styles/global'
-import { HeaderSection, SponsoredSection } from '../styles/pages'
+import { HeaderSection } from '../styles/pages'
 
 interface SponsoredProps {
   sponsoreds: [
@@ -11,6 +14,7 @@ interface SponsoredProps {
       title: string
       slug: string
       content: string
+      excerpt: string
       featuredImage: {
         node: {
           sourceUrl: string
@@ -28,9 +32,15 @@ interface SponsoredProps {
   ]
 }
 
-const Sponsored: React.FC<SponsoredProps> = ({ sponsoreds }) => {
+const SponsoredComponent: React.FC<SponsoredProps> = ({ sponsoreds }) => {
+  let unique = false
+
   if (sponsoreds[0] === undefined) {
     return <></>
+  }
+
+  if (sponsoreds.length === 1) {
+    unique = true
   }
 
   return (
@@ -39,11 +49,11 @@ const Sponsored: React.FC<SponsoredProps> = ({ sponsoreds }) => {
         <h1>Conheça nossos anunciantes</h1>
         <p>Produtos e serviços que te ajudam a manter uma vida mais saudável</p>
       </HeaderSection>
-      <SponsoredSection>
+      <SponsoredSection unique={unique}>
         {sponsoreds.map(sponsored => {
           return (
             <SponsoredCard key={sponsored.slug}>
-              <Link href={sponsored.slug}>
+              <Link href={`/anunciante/${sponsored.slug}`}>
                 <div id="img-container">
                   <img src={sponsored.featuredImage.node.sourceUrl} />
                 </div>
@@ -53,14 +63,20 @@ const Sponsored: React.FC<SponsoredProps> = ({ sponsoreds }) => {
                   <Link href={sponsored.categories.nodes[0].slug}>
                     <TypeSpan>{sponsored.categories.nodes[0].name}</TypeSpan>
                   </Link>
-                  <h1>{sponsored.title}</h1>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: sponsored.content }}
-                  />
+                  <Link href={`/anunciante/${sponsored.slug}`}>
+                    <a>
+                      <h1>{sponsored.title}</h1>
+                      <div
+                        dangerouslySetInnerHTML={{ __html: sponsored.excerpt }}
+                      />
+                    </a>
+                  </Link>
                 </section>
                 <footer>
                   <span>
-                    <Link href={sponsored.slug}>Ver mais...</Link>
+                    <Link href={`/anunciante/${sponsored.slug}`}>
+                      Ver mais...
+                    </Link>
                   </span>
                 </footer>
               </aside>
@@ -72,4 +88,4 @@ const Sponsored: React.FC<SponsoredProps> = ({ sponsoreds }) => {
   )
 }
 
-export default Sponsored
+export default SponsoredComponent

@@ -2,23 +2,15 @@ import React from 'react'
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 
-import { formatDate } from '../../utils/dateTransform'
-import {
-  getPostBySlug,
-  prefetchPosts,
-  getSponsoredsByTopic
-} from '../../lib/api'
+import { prefetchSponsoreds, getSponsoredBySlug } from '../../lib/api'
 
-import { Container, TypeSpan } from '../../styles/global'
-import { PostHeader, PostSection } from '../../styles/pages/article'
-import Newsletter from '../../components/newsletter'
-import Sponsored from '../../components/sponsoredSection'
 import Main from '../../components/main'
+import { Container } from '../../styles/global'
+import { PostHeader, PostSection } from '../../styles/pages/article'
 
-const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  post,
-  sponsoreds
-}) => {
+const SponsoredPage: React.FC<
+  InferGetStaticPropsType<typeof getStaticProps>
+> = ({ post }) => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -30,20 +22,17 @@ const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           alignItems: 'center'
         }}
       >
-        <h1>Loading...</h1>
+        <h1>Loading</h1>
       </main>
     )
   }
-
-  const date = formatDate(post.dateGmt)
 
   return (
     <Main>
       <Container>
         <PostHeader>
-          <TypeSpan>{post.categories.nodes[0].name}</TypeSpan>
           <h1>{post.title}</h1>
-          <p>{date}</p>
+          <p dangerouslySetInnerHTML={{ __html: post.excerpt }}></p>
         </PostHeader>
         <PostSection>
           <div>
@@ -52,18 +41,16 @@ const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <section dangerouslySetInnerHTML={{ __html: post.content }} />
         </PostSection>
       </Container>
-      <Sponsored sponsoreds={sponsoreds} />
-      <Newsletter />
     </Main>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await prefetchPosts()
+  const res = await prefetchSponsoreds()
 
   const posts = res.data.posts.nodes
   const paths = posts.map(post => ({
-    params: { slug: post.slug, topic: post.categories.nodes[0].slug }
+    params: { slug: post.slug }
   }))
 
   return {
@@ -73,19 +60,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await getPostBySlug(params.slug.toString())
-  const response = await getSponsoredsByTopic(params.topic.toString())
+  const res = await getSponsoredBySlug(params.slug.toString())
 
   const post = res.data.post
-  const sponsoreds = response.data.posts.nodes
 
   return {
     props: {
-      post,
-      sponsoreds
+      post
     },
-    revalidate: 1
+    revalidate: 60
   }
 }
 
-export default Post
+export default SponsoredPage

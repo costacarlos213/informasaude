@@ -16,10 +16,16 @@ export const ContactForm = styled.form`
 
   header {
     margin-top: 2.4rem;
+    text-align: center;
 
     h1 {
       font-weight: 600;
       font-size: 2rem;
+    }
+
+    p {
+      color: #a4c40a;
+      font-size: 1.4rem;
     }
   }
 

@@ -1,17 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import informaSaudeImg from '../assets/informaSaude.png'
 
 import SearchDiv from './searchBar'
 import { SearchArticlesAside } from '../styles/components/searchPosts'
+import { SidebarContext } from '../lib/context'
 
-interface SearchPostsProps {
-  changeSideSectionState(): void
-}
+const SearchPosts: React.FC = () => {
+  const [sidebarContext, setSidebarContext] = useContext(SidebarContext)  // eslint-disable-line
 
-const SearchPosts: React.FC<SearchPostsProps> = ({
-  changeSideSectionState
-}) => {
   return (
     <SearchArticlesAside>
       <img src={informaSaudeImg} alt="InformaSaúde.com" />
@@ -23,7 +20,7 @@ const SearchPosts: React.FC<SearchPostsProps> = ({
         </p>
       </header>
       <SearchDiv shrink={false} />
-      <p onClick={changeSideSectionState}>Clique aqui para explorar</p>
+      <p onClick={() => setSidebarContext(true)}>Clique aqui para explorar</p>
     </SearchArticlesAside>
   )
 }

@@ -1,71 +1,54 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
+
 import { formatDate } from '../../utils/dateTransform'
+import {
+  getPostBySlug,
+  prefetchPosts,
+  getSponsoredsByTopic
+} from '../../lib/api'
 
-import { Filter, Container, TypeSpan } from '../../styles/global'
+import { Container, TypeSpan } from '../../styles/global'
 import { PostHeader, PostSection } from '../../styles/pages/article'
-
-import Navbar from '../../components/navbar'
-import Footer from '../../components/footer'
 import Newsletter from '../../components/newsletter'
 import Sponsored from '../../components/sponsored'
-import { getPostBySlug, prefetchPosts } from '../../lib/api'
+import Main from '../../components/main'
 
 const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  post
+  post,
+  sponsoreds
 }) => {
-  const [sideSectionIsVisible, setSideSectionVisibility] = useState(false)
   const router = useRouter()
 
   if (router.isFallback) {
     return (
-      <>
-        <Navbar
-          changeSideSectionState={setSideSectionVisibility}
-          visibility={sideSectionIsVisible}
-        />
-        <Filter isSideSectionVisible={sideSectionIsVisible}>
-          <main>
-            <h1>Carregando artigo...</h1>
-          </main>
-          <Footer />
-        </Filter>
-      </>
+      <Main>
+        <h1>Carregando artigo...</h1>
+      </Main>
     )
   }
 
   const date = formatDate(post.dateGmt)
 
   return (
-    <>
-      <Navbar
-        changeSideSectionState={setSideSectionVisibility}
-        visibility={sideSectionIsVisible}
-      />
-      <Filter isSideSectionVisible={sideSectionIsVisible}>
-        <main>
-          <Container>
-            <PostHeader>
-              <TypeSpan>{post.categories.nodes[0].name}</TypeSpan>
-              <h1>{post.title}</h1>
-              <p>{date}</p>
-            </PostHeader>
-            <PostSection>
-              <div>
-                <img src={post.featuredImage.node.sourceUrl} />
-              </div>
-              <section dangerouslySetInnerHTML={{ __html: post.content }} />
-            </PostSection>
-          </Container>
-          <Container>
-            <Sponsored />
-          </Container>
-        </main>
-        <Newsletter />
-        <Footer />
-      </Filter>
-    </>
+    <Main>
+      <Container>
+        <PostHeader>
+          <TypeSpan>{post.categories.nodes[0].name}</TypeSpan>
+          <h1>{post.title}</h1>
+          <p>{date}</p>
+        </PostHeader>
+        <PostSection>
+          <div>
+            <img src={post.featuredImage.node.sourceUrl} />
+          </div>
+          <section dangerouslySetInnerHTML={{ __html: post.content }} />
+        </PostSection>
+      </Container>
+      <Sponsored sponsoreds={sponsoreds} />
+      <Newsletter />
+    </Main>
   )
 }
 
@@ -85,11 +68,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const res = await getPostBySlug(params.slug.toString())
+  const response = await getSponsoredsByTopic(params.topic.toString())
+
   const post = res.data.post
+  const sponsoreds = response.data.posts.nodes
 
   return {
     props: {
-      post
+      post,
+      sponsoreds
     },
     revalidate: 1
   }

@@ -1,54 +1,43 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 
-import { Container, Filter } from '../styles/global'
+import { getMainPosts, getSponsoreds } from '../lib/api'
 
-import Navbar from '../components/navbar'
+import { Container } from '../styles/global'
+
 import MainImageSection from '../components/mainImageSection'
-import Footer from '../components/footer'
 import SearchPosts from '../components/searchPosts'
 import Sponsored from '../components/sponsored'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { getMainPosts } from '../lib/api'
+import Main from '../components/main'
 
 const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  posts
+  posts,
+  sponsoreds
 }) => {
-  const [sideSectionIsVisible, setSideSectionVisibility] = useState(false)
-
   return (
-    <>
-      <Navbar
-        changeSideSectionState={setSideSectionVisibility}
-        visibility={sideSectionIsVisible}
-      />
-      <Filter isSideSectionVisible={sideSectionIsVisible}>
-        <main>
-          {posts.length === 3 && (
-            <Container>
-              <MainImageSection posts={posts} />
-            </Container>
-          )}
-          <Container>
-            <Sponsored />
-          </Container>
-        </main>
-        <SearchPosts
-          changeSideSectionState={() => setSideSectionVisibility(true)}
-        />
-        <Footer />
-      </Filter>
-    </>
+    <Main>
+      {posts.length === 3 && (
+        <Container>
+          <MainImageSection posts={posts} />
+        </Container>
+      )}
+      <Sponsored sponsoreds={sponsoreds} />
+      <SearchPosts />
+    </Main>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await getMainPosts()
+  const response = await getSponsoreds()
 
+  const sponsoreds = response.data.posts.nodes
   const posts = data.posts.nodes
 
   return {
     props: {
-      posts
+      posts,
+      sponsoreds
     },
     revalidate: 1
   }

@@ -2,7 +2,21 @@ interface IMultiplePosts {
   data: {
     posts: {
       pageInfo: Record<string, unknown>
-      nodes: Array<Record<string, unknown>>
+      nodes: [
+        {
+          featuredImage: Record<string, unknown>
+          title: string
+          dateGmt: string
+          slug: string
+          categories: {
+            nodes: [
+              {
+                name: string
+              }
+            ]
+          }
+        }
+      ]
     }
   }
 }
@@ -55,7 +69,7 @@ interface IPrefetchedCategories {
 }
 
 async function fetchAPI(query) {
-  const res = await fetch('http://api.informasaude.com/graphql', {
+  const res = await fetch('https://api.informasaude.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -76,7 +90,7 @@ async function fetchAPI(query) {
 export async function getMainPosts(): Promise<IMultiplePosts> {
   const MAIN_POSTS_QUERY = `
     query lastPosts {
-      posts(first: 3) {
+      posts(first: 3, where: {categoryNotIn: "12"}) {
         nodes {
           featuredImage {
             node {
@@ -146,7 +160,7 @@ export async function getPostsByTopic(
 ): Promise<IMultiplePosts> {
   const TARGETED_POSTS_QUERY = `
     query lastPosts {
-      posts(where: {categoryName: "${topic}", offsetPagination: {offset: ${offset}, size: 6}}) {
+      posts(where: {categoryName: "${topic}", offsetPagination: {offset: ${offset}, size: 6}, categoryNotIn: "12"}) {
         pageInfo {
           offsetPagination {
             total
@@ -204,6 +218,66 @@ export async function getPostBySlug(slug: string): Promise<ISinglePost> {
   return data
 }
 
+export async function getSponsoreds(): Promise<IMultiplePosts> {
+  const SPONSORED_QUERY = `
+    query Sponsored {
+      posts(where: {categoryId: 12}) {
+        nodes {
+          title
+          slug
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          categories(where: {exclude: "12"}) {
+            nodes {
+              name
+              slug
+            }
+          }
+          content
+        }
+      }
+    }
+  `
+
+  const data = await fetchAPI(SPONSORED_QUERY)
+
+  return data
+}
+
+export async function getSponsoredsByTopic(
+  topic: string
+): Promise<IMultiplePosts> {
+  const CATEGORIZED_SPONSOREDS_QUERY = `
+    query SponsoredsByTopic {
+      posts(where: {categoryId: 12, categoryName: "${topic}"}) {
+        nodes {
+          title
+          slug
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          categories(where: {exclude: "12"}) {
+            nodes {
+              name
+              slug
+            }
+          }
+          content
+        }
+      }
+    }
+  `
+
+  const data = await fetchAPI(CATEGORIZED_SPONSOREDS_QUERY)
+
+  return data
+}
+
 export async function prefetchPosts(): Promise<IPrefetchPosts> {
   const CATEGORIES_POSTS_QUERY = `
     query postsAndCategories {
@@ -228,7 +302,7 @@ export async function prefetchPosts(): Promise<IPrefetchPosts> {
 export async function prefetchCategories(): Promise<IPrefetchedCategories> {
   const CATEGORIES_QUERY = `
     query CATEGORIES {
-      categories {
+      categories(first: 20) {
         nodes {
           slug
         }

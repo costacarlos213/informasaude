@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import {
   Header,
   NavbarNav,
@@ -12,16 +12,11 @@ import InstagramSvg from '../assets/icons/instagramWhite.svg'
 import FacebookSvg from '../assets/icons/facebookWhite.svg'
 import SearchDiv from './searchBar'
 import Link from 'next/link'
+import { SidebarContext } from '../lib/context'
 
-interface NavbarProps {
-  changeSideSectionState: React.Dispatch<React.SetStateAction<boolean>>
-  visibility: boolean
-}
+const Navbar: React.FC = () => {
+  const [visibility, changeSideSectionState] = useContext(SidebarContext)
 
-const Navbar: React.FC<NavbarProps> = ({
-  changeSideSectionState,
-  visibility
-}) => {
   function useOutsideClick(ref) {
     useEffect(() => {
       function clickOutsideHandler(event) {

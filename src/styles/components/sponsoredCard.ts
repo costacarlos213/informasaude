@@ -7,15 +7,32 @@ export const SponsoredCard = styled.article`
   margin-bottom: 1.6rem;
   max-width: 38.2rem;
 
-  img {
+  div#img-container {
     width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 15px;
+    height: 20.6rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
   }
 
   ${TypeSpan} {
     font-size: 1.4rem;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  section {
+    h1:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 
   aside {
@@ -45,6 +62,16 @@ export const SponsoredCard = styled.article`
       margin-left: 1.6rem;
     }
 
+    div#img-container {
+      width: 30rem;
+      height: 20rem;
+      cursor: pointer;
+
+      img {
+        height: 20rem;
+      }
+    }
+
     aside {
       display: flex;
       flex-direction: column;
@@ -53,10 +80,6 @@ export const SponsoredCard = styled.article`
 
       footer {
         margin: 0;
-      }
-
-      img {
-        height: 20rem;
       }
     }
   }

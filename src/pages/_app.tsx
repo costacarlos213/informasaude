@@ -1,7 +1,9 @@
 import React from 'react'
+import Head from 'next/head'
+
 import { AppProps } from 'next/dist/next-server/lib/router/router'
 import GlobalStyle from '../styles/global'
-import Head from 'next/head'
+import { PaginationProvider } from '../lib/context'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
@@ -9,7 +11,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       <Head>
         <title>InformaSaúde.com</title>
       </Head>
-      <Component {...pageProps} />
+      <PaginationProvider>
+        <Component {...pageProps} />
+      </PaginationProvider>
       <GlobalStyle />
     </>
   )

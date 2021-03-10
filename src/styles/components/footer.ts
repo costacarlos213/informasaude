@@ -9,7 +9,9 @@ export const FooterDiv = styled.footer<IChangeVisibility>`
   color: whitesmoke;
   padding-bottom: 1.6rem;
   margin-top: 5px;
-
+  position: relative;
+  bottom: 0;
+  height: auto;
   width: 100%;
 
   h1 {
@@ -58,8 +60,7 @@ export const BlogSection = styled.section`
 `
 export const WhoWeAreSection = styled.section`
   p {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 25rem;
     text-align: justify;
   }
 `

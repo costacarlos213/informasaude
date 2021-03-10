@@ -55,7 +55,7 @@ export const NavbarNav = styled.section<IChangeVisibility>`
   border-bottom: solid 3px #ffd500;
   padding-left: 2rem;
   padding-right: 2rem;
-  height: 60px;
+  height: 5.6rem;
   display: flex;
   align-items: center;
   transition: 0.4s;

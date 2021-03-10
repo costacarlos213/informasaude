@@ -1,88 +1,74 @@
 import React from 'react'
 import Link from 'next/link'
 
-import marketImg from '../assets/mercado.jpg'
 import { SponsoredCard } from '../styles/components/sponsoredCard'
-import { TypeSpan } from '../styles/global'
+import { TypeSpan, Container } from '../styles/global'
 import { HeaderSection, SponsoredSection } from '../styles/pages'
 
-// interface ISponsored {
-//   type: string
-//   title: string
-//   address: string
-//   image?: string
-// }
+interface SponsoredProps {
+  sponsoreds: [
+    {
+      title: string
+      slug: string
+      content: string
+      featuredImage: {
+        node: {
+          sourceUrl: string
+        }
+      }
+      categories: {
+        nodes: [
+          {
+            name: string
+            slug: string
+          }
+        ]
+      }
+    }
+  ]
+}
 
-const Sponsored: React.FC = () => {
+const Sponsored: React.FC<SponsoredProps> = ({ sponsoreds }) => {
+  if (sponsoreds[0] === undefined) {
+    return <></>
+  }
+
   return (
-    <>
+    <Container>
       <HeaderSection>
         <h1>Conheça nossos anunciantes</h1>
         <p>Produtos e serviços que te ajudam a manter uma vida mais saudável</p>
       </HeaderSection>
       <SponsoredSection>
-        <SponsoredCard>
-          <img src={marketImg} />
-          <aside>
-            <section>
-              <TypeSpan>Alimentação</TypeSpan>
-              <h1>Mercado Orgânicos</h1>
-              <p>Rua Javoraú, 2021 - Freguesia do Ó</p>
-            </section>
-            <footer>
-              <span>
-                <Link href="#">Ver mais...</Link>
-              </span>
-            </footer>
-          </aside>
-        </SponsoredCard>
-        <SponsoredCard>
-          <img src={marketImg} />
-          <aside>
-            <section>
-              <TypeSpan>Alimentação</TypeSpan>
-              <h1>Mercado Orgânicos</h1>
-              <p>Rua Javoraú, 2021 - Freguesia do Ó</p>
-            </section>
-            <footer>
-              <span>
-                <Link href="#">Ver mais...</Link>
-              </span>
-            </footer>
-          </aside>
-        </SponsoredCard>
-        <SponsoredCard>
-          <img src={marketImg} />
-          <aside>
-            <section>
-              <TypeSpan>Alimentação</TypeSpan>
-              <h1>Mercado Orgânicos</h1>
-              <p>Rua Javoraú, 2021 - Freguesia do Ó</p>
-            </section>
-            <footer>
-              <span>
-                <Link href="#">Ver mais...</Link>
-              </span>
-            </footer>
-          </aside>
-        </SponsoredCard>
-        <SponsoredCard>
-          <img src={marketImg} />
-          <aside>
-            <section>
-              <TypeSpan>Alimentação</TypeSpan>
-              <h1>Mercado Orgânicos</h1>
-              <p>Rua Javoraú, 2021 - Freguesia do Ó</p>
-            </section>
-            <footer>
-              <span>
-                <Link href="#">Ver mais...</Link>
-              </span>
-            </footer>
-          </aside>
-        </SponsoredCard>
+        {sponsoreds.map(sponsored => {
+          return (
+            <SponsoredCard key={sponsored.slug}>
+              <Link href={sponsored.slug}>
+                <div id="img-container">
+                  <img src={sponsored.featuredImage.node.sourceUrl} />
+                </div>
+              </Link>
+              <aside>
+                <section>
+                  <Link href={sponsored.categories.nodes[0].slug}>
+                    <TypeSpan>{sponsored.categories.nodes[0].name}</TypeSpan>
+                  </Link>
+                  <h1>{sponsored.title}</h1>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: sponsored.content }}
+                  />
+                </section>
+                <footer>
+                  <span>
+                    <Link href={sponsored.slug}>Ver mais...</Link>
+                  </span>
+                </footer>
+              </aside>
+            </SponsoredCard>
+          )
+        })}
       </SponsoredSection>
-    </>
+    </Container>
   )
 }
 

@@ -1,17 +1,22 @@
+// import React, { useState, useEffect } from 'react'
 import React from 'react'
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
+// import { googlemaps } from 'googlemaps' // eslint-disable-line
 
 import { prefetchSponsoreds, getSponsoredBySlug } from '../../lib/api'
+// import { loadMapApi } from '../../lib/googleMapsUtils'
 
 import Main from '../../components/main'
 import { Container } from '../../styles/global'
 import { PostHeader, PostSection } from '../../styles/pages/article'
+// import Map from '../../components/maps'
 
 const SponsoredPage: React.FC<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ post }) => {
   const router = useRouter()
+  // const [mapsLoaded, setMapsLoaded] = useState(false)
 
   if (router.isFallback) {
     return (
@@ -27,6 +32,13 @@ const SponsoredPage: React.FC<
     )
   }
 
+  // useEffect(() => {
+  //   const googleMapScript = loadMapApi()
+  //   googleMapScript.addEventListener('load', () => {
+  //     setMapsLoaded(true)
+  //   })
+  // }, [])
+
   return (
     <Main>
       <Container>
@@ -39,6 +51,9 @@ const SponsoredPage: React.FC<
             <img src={post.featuredImage.node.sourceUrl} />
           </div>
           <section dangerouslySetInnerHTML={{ __html: post.content }} />
+          {/* {mapsLoaded && (
+            <Map mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl />
+          )} */}
         </PostSection>
       </Container>
     </Main>

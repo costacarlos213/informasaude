@@ -40,6 +40,7 @@ export const PostSection = styled.section`
   flex-direction: column;
   margin-top: 3.2rem;
   margin-bottom: 3.6rem;
+  overflow-x: hidden;
 
   div {
     width: 92.8rem;

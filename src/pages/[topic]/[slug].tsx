@@ -2,7 +2,7 @@ import React from 'react'
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 
-import { formatDate } from '../../utils/dateTransform'
+import { formatDate } from '../../lib/dateTransform'
 import {
   getPostBySlug,
   prefetchPosts,
@@ -11,7 +11,7 @@ import {
 
 import { Container, TypeSpan } from '../../styles/global'
 import { PostHeader, PostSection } from '../../styles/pages/article'
-import Newsletter from '../../components/newsletter'
+// import Newsletter from '../../components/newsletter'
 import Sponsored from '../../components/sponsoredSection'
 import Main from '../../components/main'
 
@@ -53,7 +53,7 @@ const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </PostSection>
       </Container>
       <Sponsored sponsoreds={sponsoreds} />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </Main>
   )
 }
@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       post,
       sponsoreds
     },
-    revalidate: 1
+    revalidate: 60
   }
 }
 

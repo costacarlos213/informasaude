@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
   useOutsideClick(wrapperRef)
 
   return (
-    <section>
+    <header>
       <SideSection show={visibility} ref={wrapperRef}>
         <div>
           <h1>InformaSaúde.com</h1>
@@ -132,7 +132,7 @@ const Navbar: React.FC = () => {
         </NavbarItems>
         <SearchDiv shrink={true} />
       </NavbarNav>
-    </section>
+    </header>
   )
 }
 

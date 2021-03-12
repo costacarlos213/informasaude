@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Link from 'next/link'
 
@@ -7,11 +7,12 @@ import { PaginationContext, previewPagination } from '../../lib/context'
 import { PostArticle, PostsContainer } from '../../styles/pages/topic'
 import { TypeSpan } from '../../styles/global'
 
-import { formatDate } from '../../utils/dateTransform'
+import { formatDate } from '../../lib/dateTransform'
 import { getPostsByName, getSponsoreds } from '../../lib/api'
 import Main from '../../components/main'
 import Sponsored from '../../components/sponsoredSection'
 import Pagination from '../../components/Pagination'
+import { useNonInitialEffect } from '../../lib/useNonInitialEffect'
 
 const Search: React.FC<
   InferGetServerSidePropsType<typeof getServerSideProps>
@@ -36,7 +37,7 @@ const Search: React.FC<
     }
   }
 
-  useEffect(() => {
+  useNonInitialEffect(() => {
     fetchPosts(paginationContext)
   }, [paginationContext])
 

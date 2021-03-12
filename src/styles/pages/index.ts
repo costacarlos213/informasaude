@@ -17,3 +17,19 @@ export const HeaderSection = styled.header`
     text-align: left;
   }
 `
+
+export const LastPostHeader = styled(HeaderSection)`
+  margin-bottom: 1rem;
+
+  @media (min-width: 700px) {
+    display: flex;
+    align-items: flex-end;
+
+    h1 {
+      line-height: 2.8rem;
+      margin-right: 1rem;
+    }
+
+    margin-bottom: 2.8rem;
+  }
+`

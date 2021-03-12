@@ -13,7 +13,7 @@ export const SponsoredCard = styled.article`
 
   div#img-container {
     width: 100%;
-    height: 20.6rem;
+    height: 28rem;
 
     img {
       width: 100%;
@@ -71,12 +71,8 @@ export const SponsoredCard = styled.article`
 
     div#img-container {
       width: 30rem;
-      height: 20rem;
+      height: 21.4rem;
       cursor: pointer;
-
-      img {
-        height: 20rem;
-      }
     }
 
     aside {
@@ -100,6 +96,8 @@ export const SponsoredSection = styled.section<SectionProps>`
   flex-wrap: wrap;
 
   @media (min-width: 700px) {
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
     flex-direction: row;
     justify-content: ${props => (props.unique ? 'flex-start' : 'space-evenly')};
     ${props =>

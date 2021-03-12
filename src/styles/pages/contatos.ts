@@ -2,10 +2,10 @@ import styled from 'styled-components'
 
 export const ContactForm = styled.form`
   background-color: white;
-  border-radius: 8px;
   margin-left: auto;
   margin-right: auto;
-  width: 42.6rem;
+  width: 100vw;
+  border-radius: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -71,7 +71,13 @@ export const ContactForm = styled.form`
   }
 
   @media (min-width: 700px) {
-    width: 56.4rem;
+    width: 62.4rem;
+    border-radius: 8px;
+  }
+
+  @media (min-height: 920px) {
+    margin-top: 6.8vh;
+    margin-bottom: 6.8vh;
   }
 `
 

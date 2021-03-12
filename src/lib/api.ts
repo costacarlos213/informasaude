@@ -2,21 +2,20 @@ interface IMultiplePosts {
   data: {
     posts: {
       pageInfo: Record<string, unknown>
-      nodes: [
-        {
-          featuredImage: Record<string, unknown>
-          title: string
-          dateGmt: string
-          slug: string
-          categories: {
-            nodes: [
-              {
-                name: string
-              }
-            ]
-          }
+      nodes: Array<{
+        featuredImage: Record<string, unknown>
+        title: string
+        dateGmt: string
+        slug: string
+        categories: {
+          nodes: [
+            {
+              name: string
+              slug: string
+            }
+          ]
         }
-      ]
+      }>
     }
   }
 }
@@ -314,6 +313,35 @@ export async function getSponsoredBySlug(slug: string): Promise<ISponsoreds> {
   `
 
   const data = await fetchAPI(SPONSORED_QUERY)
+
+  return data
+}
+
+export async function getLastPosts(topic: string): Promise<IMultiplePosts> {
+  const LAST_POSTS_QUERY = `
+    query lastPosts {
+      posts(where: {categoryName: "${topic}", categoryNotIn: "12", offsetPagination: {offset: 1, size: 3}}) {
+        nodes {
+          title
+          slug
+          dateGmt
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          categories {
+            nodes {
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  `
+
+  const data = await fetchAPI(LAST_POSTS_QUERY)
 
   return data
 }

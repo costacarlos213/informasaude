@@ -46,7 +46,7 @@ export const MainImagesContainer = styled.div`
 
     div {
       ${ImgCard} {
-        width: 45vw;
+        width: 46.5vw;
         height: 16rem;
       }
     }

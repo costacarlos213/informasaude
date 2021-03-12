@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { GetStaticProps, InferGetStaticPropsType, GetStaticPaths } from 'next'
 import Link from 'next/link'
 
-import { formatDate } from '../../utils/dateTransform'
+import { formatDate } from '../../lib/dateTransform'
 import {
   getPostsByTopic,
   prefetchCategories,
@@ -18,6 +18,7 @@ import { TypeSpan } from '../../styles/global'
 import Sponsored from '../../components/sponsoredSection'
 import Main from '../../components/main'
 import Pagination from '../../components/Pagination'
+import SearchPosts from '../../components/searchPosts'
 
 const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   data,
@@ -83,6 +84,7 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <Pagination total={pageInfo.total} />
       </PostsContainer>
       <Sponsored sponsoreds={sponsoreds} />
+      <SearchPosts />
     </Main>
   )
 }
@@ -116,7 +118,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       pageInfo,
       sponsoreds
     },
-    revalidate: 1
+    revalidate: 20
   }
 }
 

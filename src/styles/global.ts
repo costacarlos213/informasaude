@@ -56,11 +56,19 @@ export default createGlobalStyle`
     }
   }
 
+  @media(min-height: 920px) {
+    :root {
+      font-size: 72.5%;
+    }
+  }
+
   @media (max-width: 400px) {
     :root {
       font-size: 50.8%;
     }
   }
+
+  
 `
 
 export const Container = styled.section`
@@ -83,9 +91,9 @@ export const TypeSpan = styled.span`
 export const Filter = styled.div<FilterProps>`
   background-color: #f5efe6;
   transition: 0.4s;
-  height: auto;
   width: 100%;
-  position: absolute;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   ${props =>
     props.isSideSectionVisible &&

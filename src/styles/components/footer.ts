@@ -9,10 +9,9 @@ export const FooterDiv = styled.footer<IChangeVisibility>`
   color: whitesmoke;
   padding-bottom: 1.6rem;
   margin-top: 5px;
-  position: relative;
-  bottom: 0;
   height: auto;
   width: 100%;
+  position: relative;
 
   h1 {
     font-size: 1.4rem;

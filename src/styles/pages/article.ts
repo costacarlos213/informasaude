@@ -97,7 +97,6 @@ export const PostSection = styled.section`
 
 export const ImageDiv = styled.div`
   width: 92.8rem;
-  /* height: 42.5rem; */
   height: auto;
   margin-bottom: 2.4rem;
 

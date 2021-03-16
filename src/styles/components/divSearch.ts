@@ -3,7 +3,6 @@ import { IChangeVisibility } from './navbar'
 
 export const DivSearch = styled.article<IChangeVisibility>`
   margin-left: auto;
-  /* height: 80%; */
 
   form {
     display: flex;

@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useRef, useEffect, useContext } from 'react'
+import Link from 'next/link'
+
+import { SidebarContext } from '../lib/context'
+import informaSaudeImg from '../assets/informaSaude.png'
+
+import InstagramSvg from '../assets/icons/instagramWhite.svg'
+import FacebookSvg from '../assets/icons/facebookWhite.svg'
+
 import {
   Header,
   NavbarNav,
@@ -8,11 +16,8 @@ import {
   SocialMediasIcons,
   SideSection
 } from '../styles/components/navbar'
-import InstagramSvg from '../assets/icons/instagramWhite.svg'
-import FacebookSvg from '../assets/icons/facebookWhite.svg'
+
 import SearchDiv from './searchBar'
-import Link from 'next/link'
-import { SidebarContext } from '../lib/context'
 
 const Navbar: React.FC = () => {
   const [visibility, changeSideSectionState] = useContext(SidebarContext)
@@ -40,7 +45,9 @@ const Navbar: React.FC = () => {
     <header>
       <SideSection show={visibility} ref={wrapperRef}>
         <div>
-          <h1>InformaSaúde.com</h1>
+          <Link href="/">
+            <img src={informaSaudeImg} alt="Informa Saúde" />
+          </Link>
           <button onClick={() => changeSideSectionState(false)}>
             <span>×</span>
           </button>
@@ -97,7 +104,9 @@ const Navbar: React.FC = () => {
       </SideSection>
       <Header show={visibility}>
         <div>
-          <h1>InformaSaúde.com</h1>
+          <Link href="/">
+            <img src={informaSaudeImg} alt="Informa Saúde" />
+          </Link>
           <p>
             Todas as novidades do mundo da saúde, bem estar e qualidade de vida
             em um só lugar

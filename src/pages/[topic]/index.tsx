@@ -63,6 +63,30 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           {posts.map(post => {
             const date = formatDate(post.dateGmt)
 
+            const Category = (): JSX.Element => {
+              let isPartner = false
+              let partnerIndex = 0
+
+              for (let i = 0; i < post.categories.nodes.length; i++) {
+                const name = post.categories.nodes[i].name
+
+                if (name === 'Parceiro') {
+                  isPartner = true
+                  partnerIndex = i
+                }
+              }
+
+              if (isPartner) {
+                return (
+                  <TypeSpan>
+                    {post.categories.nodes[partnerIndex].name}
+                  </TypeSpan>
+                )
+              } else {
+                return <TypeSpan>{post.categories.nodes[0].name}</TypeSpan>
+              }
+            }
+
             return (
               <Link href={`${topic}/${post.slug}`} key={post.slug}>
                 <PostArticle>
@@ -74,7 +98,7 @@ const Topic: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     <h1>{post.title}</h1>
                     <TypeSpan>{date}</TypeSpan>
                     <br />
-                    <TypeSpan>{post.categories.nodes[0].name}</TypeSpan>
+                    {Category()}
                   </div>
                 </PostArticle>
               </Link>

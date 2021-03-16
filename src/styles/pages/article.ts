@@ -42,25 +42,19 @@ export const PostSection = styled.section`
   margin-bottom: 3.6rem;
   overflow-x: hidden;
 
-  div {
-    width: 92.8rem;
-    height: 42.5rem;
-    margin-bottom: 2.4rem;
-
-    img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
   section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
+    div {
+      height: auto;
+      margin-bottom: 0;
+    }
+
     p {
+      width: 100%;
       max-width: 80rem;
       text-align: justify;
       margin-top: 1.6rem;
@@ -98,5 +92,18 @@ export const PostSection = styled.section`
         max-width: 80vw;
       }
     }
+  }
+`
+
+export const ImageDiv = styled.div`
+  width: 92.8rem;
+  /* height: 42.5rem; */
+  height: auto;
+  margin-bottom: 2.4rem;
+
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
   }
 `

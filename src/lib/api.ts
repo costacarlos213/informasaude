@@ -130,6 +130,34 @@ export async function getMainPosts(): Promise<IMultiplePosts> {
   return data
 }
 
+export async function getPartners(): Promise<IMultiplePosts> {
+  const PARTNERS_QUERY = `
+    query lastPosts {
+      posts(first: 3, where: {categoryName: "parceiro"}) {
+        nodes {
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          slug
+          title
+          categories {
+            nodes {
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  `
+
+  const data = await fetchAPI(PARTNERS_QUERY)
+
+  return data
+}
+
 export async function getPostsByName(
   offset: number,
   query: string

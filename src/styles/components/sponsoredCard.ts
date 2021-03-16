@@ -61,7 +61,7 @@ export const SponsoredCard = styled.article`
     }
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 750px) {
     width: 30rem;
     flex: 0 0 30rem;
 
@@ -79,7 +79,7 @@ export const SponsoredCard = styled.article`
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 15rem;
+      height: 12.4rem;
 
       footer {
         margin: 0;
@@ -95,7 +95,7 @@ export const SponsoredSection = styled.section<SectionProps>`
   justify-content: center;
   flex-wrap: wrap;
 
-  @media (min-width: 700px) {
+  @media (min-width: 750px) {
     padding-left: 1.6rem;
     padding-right: 1.6rem;
     flex-direction: row;

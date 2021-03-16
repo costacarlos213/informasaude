@@ -14,7 +14,7 @@ export const PostsDiv = styled.div<PostDivProps>`
   padding-right: 1.2rem;
   margin-bottom: 2.4rem;
 
-  @media (min-width: 700px) {
+  @media (min-width: 880px) {
     flex-direction: row;
     height: 30rem;
     justify-content: ${props => (props.unique ? 'flex-start' : 'space-evenly')};
@@ -61,7 +61,7 @@ export const PostCard = styled.article<PostDivProps>`
     }
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 880px) {
     width: ${props => (props.unique ? '31.2%' : 'calc(100% / 2)')};
   }
 `

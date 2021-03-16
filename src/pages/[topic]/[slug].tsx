@@ -10,7 +10,7 @@ import {
 } from '../../lib/api'
 
 import { Container, TypeSpan } from '../../styles/global'
-import { PostHeader, PostSection } from '../../styles/pages/article'
+import { PostHeader, PostSection, ImageDiv } from '../../styles/pages/article'
 // import Newsletter from '../../components/newsletter'
 import Sponsored from '../../components/sponsoredSection'
 import Main from '../../components/main'
@@ -46,9 +46,9 @@ const Post: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <p>{date}</p>
         </PostHeader>
         <PostSection>
-          <div>
+          <ImageDiv>
             <img src={post.featuredImage.node.sourceUrl} />
-          </div>
+          </ImageDiv>
           <section dangerouslySetInnerHTML={{ __html: post.content }} />
         </PostSection>
       </Container>

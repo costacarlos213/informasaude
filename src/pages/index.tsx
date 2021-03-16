@@ -1,7 +1,12 @@
 import React from 'react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 
-import { getMainPosts, getSponsoreds, getLastPosts } from '../lib/api'
+import {
+  getMainPosts,
+  getSponsoreds,
+  getLastPosts,
+  getPartners
+} from '../lib/api'
 
 import { Container, TypeSpan } from '../styles/global'
 
@@ -11,12 +16,20 @@ import Sponsored from '../components/sponsoredSection'
 import Main from '../components/main'
 import LastPosts from '../components/lastPosts'
 import { LastPostHeader } from '../styles/pages'
+import Partners from '../components/partners'
 
 const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
   sponsoreds,
-  lastPosts
+  lastPosts,
+  partners
 }) => {
+  let areTherePartners = true
+
+  if (partners.length === 0) {
+    areTherePartners = false
+  }
+
   return (
     <Main>
       {posts.length === 3 && (
@@ -43,6 +56,14 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
           )
         }
       })}
+      {areTherePartners && (
+        <Container>
+          <LastPostHeader>
+            <h1>Nossos parceiros</h1>
+          </LastPostHeader>
+          <Partners partners={partners} />
+        </Container>
+      )}
       <Sponsored sponsoreds={sponsoreds} />
       <SearchPosts />
     </Main>
@@ -54,27 +75,30 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const { data } = await getMainPosts()
   const response = await getSponsoreds()
+  const res = await getPartners()
 
   const sponsoreds = response.data.posts.nodes
   const posts = data.posts.nodes
+  const partners = res.data.posts.nodes
 
-  const categories = posts.map(post => {
+  const postCategories = posts.map(post => {
     return post.categories.nodes[0].slug
   })
 
-  const filteredCategories = categories.filter(
-    (este, i) => categories.indexOf(este) === i
+  const filteredPostCategories = postCategories.filter(
+    (este, i) => postCategories.indexOf(este) === i
   )
 
-  for (let i = 0; i <= filteredCategories.length; i++) {
-    lastPosts.push(await getLastPosts(filteredCategories[i]))
+  for (let i = 0; i <= filteredPostCategories.length; i++) {
+    lastPosts.push(await getLastPosts(filteredPostCategories[i]))
   }
 
   return {
     props: {
       posts,
       sponsoreds,
-      lastPosts
+      lastPosts,
+      partners
     },
     revalidate: 20
   }

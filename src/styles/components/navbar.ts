@@ -5,7 +5,7 @@ export interface IChangeVisibility {
 }
 
 export const Header = styled.header<IChangeVisibility>`
-  background-color: #db7a00;
+  background-color: #f19810;
   padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 10px;
@@ -16,6 +16,16 @@ export const Header = styled.header<IChangeVisibility>`
   flex-direction: column;
   align-items: center;
   transition: 0.4s;
+
+  h1 {
+    line-height: 3.2rem;
+  }
+
+  img {
+    width: 18.2rem;
+    cursor: pointer;
+    margin-right: 2.4rem;
+  }
 
   ${props =>
     props.show &&
@@ -32,7 +42,8 @@ export const Header = styled.header<IChangeVisibility>`
     text-align: left;
     padding-left: 2vw;
     padding-right: 2vw;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: flex-start;
   }
 `
 
@@ -47,6 +58,10 @@ export const SocialMediasIcons = styled.article`
     width: auto;
     margin-right: 1rem;
     cursor: pointer;
+  }
+
+  @media (min-width: 850px) {
+    margin-left: auto;
   }
 `
 
@@ -78,7 +93,7 @@ export const NavbarItems = styled.nav`
 
   a,
   button {
-    margin-right: 1.8rem;
+    margin-right: 2.4rem;
     font-weight: 700;
   }
 
@@ -142,6 +157,14 @@ export const SideSection = styled.section<IChangeVisibility>`
       font-size: 2.4rem;
       margin-bottom: 1.2rem;
       margin-top: 2.4rem;
+    }
+
+    img {
+      width: 18.2rem;
+      margin-left: 4.2rem;
+      margin-bottom: 1.2rem;
+      margin-top: 2.4rem;
+      cursor: pointer;
     }
   }
 

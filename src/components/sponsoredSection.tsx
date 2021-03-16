@@ -66,9 +66,6 @@ const SponsoredComponent: React.FC<SponsoredProps> = ({ sponsoreds }) => {
                   <Link href={`/anunciante/${sponsored.slug}`}>
                     <a>
                       <h1>{sponsored.title}</h1>
-                      <div
-                        dangerouslySetInnerHTML={{ __html: sponsored.excerpt }}
-                      />
                     </a>
                   </Link>
                 </section>

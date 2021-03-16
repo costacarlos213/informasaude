@@ -12,7 +12,7 @@ export const HeaderSection = styled.header`
     font-size: 1.4rem;
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 750px) {
     margin: 2vw;
     text-align: left;
   }

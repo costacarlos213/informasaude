@@ -44,7 +44,6 @@ const SponsoredPage: React.FC<
       <Container>
         <PostHeader>
           <h1>{post.title}</h1>
-          <p dangerouslySetInnerHTML={{ __html: post.excerpt }}></p>
         </PostHeader>
         <PostSection>
           <div>
